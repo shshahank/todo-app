@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const { checkCreateTodo, checkUpdateTodo, checkTodoId } = require("./middlewares");
 const { connectDB, todos } = require("./database");
 const app = express();
@@ -8,6 +9,7 @@ const port = 3000;
 connectDB();
 
 app.use(express.json());
+app.use(cors());
 
 // Root route
 app.get("/", function(req, res) {
