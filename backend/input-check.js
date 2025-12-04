@@ -13,7 +13,12 @@ const updateTodo = z.object({
     id : z.string()
 });
 
+// Input check for deleteTodo { id }
+const deleteTodo = z.object({
+    id : z.string()
+})
+
 module.exports = {
-    createTodo, updateTodo, checkId
+    createTodo, updateTodo, checkId, deleteTodo
 }
 

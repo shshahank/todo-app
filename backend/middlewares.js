@@ -1,4 +1,4 @@
-const { createTodo, updateTodo, checkId } = require("./input-check");
+const { createTodo, updateTodo, checkId, deleteTodo } = require("./input-check");
 
 function checkTodoId(req, res, next) {
     const id = req.query.id;
@@ -40,6 +40,19 @@ function checkUpdateTodo(req, res, next) {
     next();
 }
 
+// Input validation for deleting the todo
+function checkDeleteTodo(req, res, next) {
+    const payload = req.body;
+    const parsedPayload = deleteTodo.safeParse(payload);
+
+    if(!parsedPayload.success) {
+        return res.status(400).json({
+            msg : "You sent wrong input :("
+        })
+    }
+    next();
+}
+
 module.exports = {
-    checkCreateTodo, checkUpdateTodo, checkTodoId
+    checkCreateTodo, checkUpdateTodo, checkTodoId, checkDeleteTodo
 }

@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const { checkCreateTodo, checkUpdateTodo, checkTodoId } = require("./middlewares");
+const { checkCreateTodo, checkUpdateTodo, checkTodoId, checkDeleteTodo } = require("./middlewares");
 const { connectDB, todos } = require("./database");
+const { mongo } = require("mongoose");
 const app = express();
 const port = 3000;
 
@@ -103,6 +104,32 @@ app.put("/done", checkUpdateTodo, async function(req, res) {
         return res.status(500).json({
             error: "DB error"
         });
+    }
+});
+
+app.delete("/delete", checkDeleteTodo, async function(req, res) {
+    const id = req.body.id;
+
+    
+
+    try {
+        const response = await todos.findByIdAndDelete(id);
+
+        if(!response) {
+            return res.status(404).json({
+                msg : "Todo not present"
+            });
+        }
+
+        return res.status(200).json({
+            msg : "Todo deleted"
+        })
+    } catch(err) {
+        console.log("Something's up with DB");
+        console.error(err);
+        return res.status(500).json({
+            error : "DB error"
+        })
     }
 });
 

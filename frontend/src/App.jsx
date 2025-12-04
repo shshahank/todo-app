@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { CreateTodo } from "../components/CreateTodo"
-import { DisplayTodo } from "../components/DisplayTodo"
-import { Card } from "../components/Card"
+import { CreateTodo } from "./components/CreateTodo"
+import { DisplayTodo } from "./components/DisplayTodo"
+import { Card } from "./components/Card"
 import axios from 'axios'
 
 function App() {
