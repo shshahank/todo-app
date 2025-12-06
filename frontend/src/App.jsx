@@ -1,36 +1,32 @@
-import { useEffect, useState } from 'react'
-import { CreateTodo } from "./components/CreateTodo"
-import { DisplayTodo } from "./components/DisplayTodo"
-import { Card } from "./components/Card"
-import axios from 'axios'
+import { useEffect, useState } from "react";
+import { CreateTodo } from "./components/CreateTodo";
+import { DisplayTodo } from "./components/DisplayTodo";
+import axios from "axios";
 
 function App() {
   const [todos, setTodos] = useState([]);
 
-  useEffect(function () {
-    axios.get("http://localhost:3000/alltodos")
-      .then(function (response) {
-        setTodos(response.data.todos);
-      })
-      .catch(function (err) {
-        console.log(err);
-      })
-  }, [])
+  useEffect(() => {
+    async function fetchTodos() {
+      const res = await axios.get("http://localhost:3000/alltodos");
+      setTodos(res.data.todos);
+    }
+    fetchTodos();
+  }, []);
 
   return (
-    <div>
-      <CreateTodo setTodos={setTodos}></CreateTodo>
-      <div style={{ display: "flex" }}>
-        {todos.map(todo => {
-          return (
-            <Card key={todo._id} flag={todo.flag}>
-              <DisplayTodo todo={todo} setTodos={setTodos} />
-            </Card>
-          )
-        })}
+    <div className="font-sans text-lg p-6 bg-gray-50 min-h-screen">
+
+      <CreateTodo setTodos={setTodos} />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+        {todos.map((todo) => (
+          <DisplayTodo key={todo._id} todo={todo} setTodos={setTodos} />
+        ))}
       </div>
+
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
