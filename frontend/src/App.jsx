@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { CreateTodo } from "./components/CreateTodo";
 import { DisplayTodo } from "./components/DisplayTodo";
 import axios from "axios";
+import API_URL from "./config";
 
 function App() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     async function fetchTodos() {
-      const res = await axios.get("http://localhost:3000/alltodos");
+      const res = await axios.get(`${API_URL}/alltodos`);
       setTodos(res.data.todos);
     }
     fetchTodos();

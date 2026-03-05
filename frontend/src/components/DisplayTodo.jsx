@@ -1,21 +1,22 @@
 import axios from "axios";
 import { Card } from "./Card";
+import API_URL from "../config";
 
 export function DisplayTodo({ todo, setTodos }) {
 
     async function refreshTodos() {
-        const res = await axios.get("http://localhost:3000/alltodos");
+        const res = await axios.get(`${API_URL}/alltodos`);
         setTodos(res.data.todos);
     }
 
     async function updateFlag() {
         if (todo.flag) return;
-        await axios.put("http://localhost:3000/done", { id: todo._id });
+        await axios.put(`${API_URL}/done`, { id: todo._id });
         await refreshTodos();
     }
 
     async function deleteTodo() {
-        await axios.delete("http://localhost:3000/delete", {
+        await axios.delete(`${API_URL}/delete`, {
             data: { id: todo._id }
         });
         await refreshTodos();

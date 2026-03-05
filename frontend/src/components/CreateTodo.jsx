@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useRef } from "react";
+import API_URL from "../config";
 
 export function CreateTodo({ setTodos }) {
     const titleRef = useRef();
@@ -14,9 +15,9 @@ export function CreateTodo({ setTodos }) {
             return;
         }
 
-        await axios.post("http://localhost:3000/todo", { title, task });
+        await axios.post(`${API_URL}/todo`, { title, task });
 
-        const response = await axios.get("http://localhost:3000/alltodos");
+        const response = await axios.get(`${API_URL}/alltodos`);
         setTodos(response.data.todos);
 
         // Clear inputs
@@ -47,6 +48,7 @@ export function CreateTodo({ setTodos }) {
             >
                 Add Todo
             </button>
+
         </div>
     );
 }
